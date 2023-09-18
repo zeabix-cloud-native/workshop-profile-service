@@ -3,24 +3,24 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    kubernetes.io/ingress.class: nginx
+  #   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  #   nginx.ingress.kubernetes.io/use-regex: "true"
+  #   nginx.ingress.kubernetes.io/rewrite-target: /$2
   name: workshop-ingress
-  namespace: ingress-nginx
 spec:
-  ingressClassName: nginx
   rules:
   - host: workshop-api.z-unified.com
     http:
       paths:
-        - path: /profile-service(/|$)(.*)
-          pathType: ImplementationSpecific
+        - path: /profile-service
+          pathType: Prefix
           backend:
             service: 
               name: workshop-profile-service
               port: 
                 number: 8080
-  tls: []
- # - hosts:
- #   - workshop-api.z-unified.com
- #   secretName: zunified
+  tls:
+  - hosts:
+    - workshop-api.z-unified.com
+    secretName: zunified-tls

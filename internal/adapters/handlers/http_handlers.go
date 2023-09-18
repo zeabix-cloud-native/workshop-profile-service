@@ -24,8 +24,10 @@ func NewHTTPHandler(s ports.ProfileService) *HTTPHandler {
 func (h *HTTPHandler) Serve(port string) error {
 	h.app.Use(cors.New())
 
+	g := h.app.Group("profile-service")
+
 	// V1 apis
-	v1 := h.app.Group("v1")
+	v1 := g.Group("v1")
 	handlerV1 := httpv1.NewHttpHandlerV1(h.s, v1)
 	handlerV1.Initialize()
 

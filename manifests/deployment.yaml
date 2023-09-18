@@ -17,10 +17,11 @@ spec:
     spec:
       containers:
       - name: workshop-profile-service
-        image: acrzeabixworkshop.azurecr.io/workshop-product-service:23641bc
+        image: lqbl0acr0shared.azurecr.io/workshop-profile-service:f7ac0ae
+        imagePullPolicy: IfNotPresent
+#        image: lqbl0acr0shared.azurecr.io/eqa-questionaire-service:93cb26287ad604462411cf50b86a607a7cbc4ee4
         ports:
         - containerPort: 8080
-          name: rest-svc
         env:
           - name: PORT 
             value: "8080"
@@ -31,9 +32,9 @@ metadata:
   name: workshop-profile-service
 spec:
   selector:
-    app.kubernetes.io/name: workshop-profile-service
+    app: workshop-profile-service
   ports:
   - name: rest-api
     protocol: TCP
     port: 8080
-    targetPort: rest-svc
+    targetPort: 8080
