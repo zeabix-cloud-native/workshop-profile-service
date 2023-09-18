@@ -12,5 +12,5 @@ func main() {
 	s := services.NewProfileService(repo)
 
 	handler := httpv1.NewHttpHandlerV1(s)
-	handler.Serve(":3000")
+	handler.Serve(":3001")
 }

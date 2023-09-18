@@ -2,6 +2,7 @@ package httpv1
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/domain"
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/ports"
@@ -34,6 +35,7 @@ func NewHttpHandlerV1(s ports.ProfileService) *Handler {
 }
 
 func (h *Handler) Serve(port string) error {
+	h.app.Use(cors.New())
 	v1 := h.app.Group("v1")
 	v1.Post("/profiles", h.createProfileHandler)
 	v1.Get("/profiles/:id", h.getProfileHandler)
