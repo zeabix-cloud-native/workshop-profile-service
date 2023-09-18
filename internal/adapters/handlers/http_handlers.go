@@ -7,8 +7,6 @@ import (
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/adapters/handlers/httpv1"
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/adapters/handlers/httpv2"
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/ports"
-
-	"fmt"
 )
 
 type HTTPHandler struct {
@@ -36,5 +34,13 @@ func (h *HTTPHandler) Serve(port string) error {
 	handlerV2 := httpv2.NewHttpHandlerV2(h.s, v2)
 	handlerV2.Initialize()
 
-	return h.app.Listen(fmt.Sprintf(":%s", port))
+	// Healthcheck
+	h.app.Get("/health", h.healthCheck)
+
+	return h.app.Listen(port)
+}
+
+func (h *HTTPHandler) healthCheck(c *fiber.Ctx) error {
+	c.SendStatus(fiber.StatusOK)
+	return nil
 }

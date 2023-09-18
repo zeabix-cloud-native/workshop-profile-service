@@ -1,0 +1,11 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: workshop-profile-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: workshop-profile-service.workshop.svc.cluster.local
+  ports:
+  - port: 8080
