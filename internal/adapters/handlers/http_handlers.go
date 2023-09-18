@@ -32,12 +32,12 @@ func (h *HTTPHandler) Serve(port string) error {
 	handlerV1.Initialize()
 
 	//V2 apis
-	v2 := h.app.Group("v2")
+	v2 := g.Group("v2")
 	handlerV2 := httpv2.NewHttpHandlerV2(h.s, v2)
 	handlerV2.Initialize()
 
 	// Healthcheck
-	h.app.Get("/health", h.healthCheck)
+	g.Get("/health", h.healthCheck)
 
 	return h.app.Listen(port)
 }
