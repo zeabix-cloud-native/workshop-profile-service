@@ -6,4 +6,8 @@ type UserProfile struct {
 	Firstname string
 	Lastname  string
 	Avatar    string
+	DOB       string
+	Mobile    string
+	Address   string
+	OID       string
 }
