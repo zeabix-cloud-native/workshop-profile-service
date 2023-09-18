@@ -1,0 +1,38 @@
+name: Build-Push
+on:
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - main
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+  actions: read
+  security-events: write
+  issues: write
+
+jobs:
+
+  docker-build:
+    name: Build and Push
+    runs-on: ubuntu
+    outputs:
+      output1: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+      - uses: actions/checkout@v3  
+      - name: 'Docker Login'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ vars.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Get the version
+        id: get_version
+        run: echo VERSION=$(echo ${{ github.sha }} | cut -c 1-7) >> $GITHUB_OUTPUT
+      - name: Build an image from Dockerfile
+        run: |
+              docker build . --file Dockerfile --tag ${{ vars.REGISTRY_LOGIN_SERVER }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.VERSION }} --no-cache
+      - name: Push an image to ACR
+        run: |
+              docker push ${{ vars.REGISTRY_LOGIN_SERVER }}/${{ github.event.repository.name }}:${{ steps.get_version.outputs.VERSION }}
