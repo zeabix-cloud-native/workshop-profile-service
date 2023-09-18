@@ -16,7 +16,7 @@ jobs:
 
   docker-build:
     name: Build and Push
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.get_version.outputs.VERSION }}
     steps:
