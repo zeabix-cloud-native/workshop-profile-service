@@ -39,3 +39,13 @@ func (repo *mapdb) GetProfileByID(id string) (*domain.UserProfile, error) {
 
 	return p, nil
 }
+
+func (repo *mapdb) GetProfileByOID(oid string) (*domain.UserProfile, error) {
+	for _, v := range repo.DB {
+		if v.OID == oid {
+			return v, nil
+		}
+	}
+
+	return nil, ports.ErrProfileNotFound
+}

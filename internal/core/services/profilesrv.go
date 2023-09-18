@@ -27,3 +27,7 @@ func (s *service) CreateProfile(profile *domain.UserProfile) error {
 func (s *service) GetProfile(id string) (*domain.UserProfile, error) {
 	return s.repo.GetProfileByID(id)
 }
+
+func (s *service) GetProfileByOID(oid string) (*domain.UserProfile, error) {
+	return s.repo.GetProfileByOID(oid)
+}

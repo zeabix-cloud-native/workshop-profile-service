@@ -13,9 +13,11 @@ var (
 type ProfileService interface {
 	CreateProfile(profile *domain.UserProfile) error
 	GetProfile(id string) (*domain.UserProfile, error)
+	GetProfileByOID(oid string) (*domain.UserProfile, error)
 }
 
 type ProfileRepository interface {
 	Save(profile *domain.UserProfile) error
 	GetProfileByID(id string) (*domain.UserProfile, error)
+	GetProfileByOID(oid string) (*domain.UserProfile, error)
 }

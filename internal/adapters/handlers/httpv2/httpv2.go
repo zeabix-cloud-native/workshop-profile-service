@@ -39,6 +39,39 @@ func NewHttpHandlerV2(s ports.ProfileService, g fiber.Router) *Handler {
 
 func (h *Handler) Initialize() error {
 	h.g.Post("/profiles", h.createProfileHandler)
+	h.g.Get("/profiles/:oid", h.getProfileHandler)
+	return nil
+}
+
+func (h *Handler) getProfileHandler(c *fiber.Ctx) error {
+	oid := c.Params("oid")
+	p, err := h.s.GetProfileByOID(oid)
+	if err == ports.ErrProfileNotFound {
+		return fiber.ErrNotFound
+	}
+
+	if err != nil {
+		return fiber.ErrInternalServerError
+	}
+
+	// Serialized Response
+	res := new(ProfileResponse)
+	res.ID = p.ID
+	res.Username = p.Username
+	res.Firstname = p.Firstname
+	res.Lastname = p.Lastname
+	res.Avatar = p.Avatar
+	res.DOB = p.DOB
+	res.Mobile = p.Mobile
+	res.Address = p.Address
+	res.OID = p.OID
+
+	resStr, err := json.Marshal(res)
+	if err != nil {
+		return fiber.ErrInternalServerError
+	}
+
+	c.Status(fiber.StatusOK).SendString(string(resStr))
 	return nil
 }
 
