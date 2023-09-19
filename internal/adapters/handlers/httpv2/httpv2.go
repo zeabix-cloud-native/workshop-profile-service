@@ -70,6 +70,7 @@ func (h *Handler) getProfileHandler(c *fiber.Ctx) error {
 	// }
 
 	c.Status(fiber.StatusOK).JSON(res)
+	c.Set("content-type", "application/json; charset=utf-8")
 	return nil
 }
 
@@ -112,5 +113,6 @@ func (h *Handler) createProfileHandler(c *fiber.Ctx) error {
 	// }
 
 	c.Status(fiber.StatusCreated).JSON(res)
+	c.Set("content-type", "application/json; charset=utf-8")
 	return nil
 }
