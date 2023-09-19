@@ -5,6 +5,8 @@ import (
 
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/domain"
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/ports"
+
+	"encoding/json"
 )
 
 type CreateProfileRequest struct {
@@ -64,13 +66,13 @@ func (h *Handler) getProfileHandler(c *fiber.Ctx) error {
 	res.Address = p.Address
 	res.OID = p.OID
 
-	// resStr, err := json.Marshal(res)
-	// if err != nil {
-	// 	return fiber.ErrInternalServerError
-	// }
+	resStr, err := json.Marshal(res)
+	if err != nil {
+		return fiber.ErrInternalServerError
+	}
 
-	c.Status(fiber.StatusOK).JSON(res)
-	c.Set("content-type", "application/json; charset=utf-8")
+	c.Status(fiber.StatusOK).SendString(string(resStr))
+	c.Set("content-type", "application/json")
 	c.Set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Cache-Control")
 	return nil
 }
