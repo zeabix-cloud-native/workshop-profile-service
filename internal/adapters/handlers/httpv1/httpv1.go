@@ -5,8 +5,6 @@ import (
 
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/domain"
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/core/ports"
-
-	"encoding/json"
 )
 
 type CreateProfileRequest struct {
