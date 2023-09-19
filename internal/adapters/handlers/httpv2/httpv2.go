@@ -40,6 +40,38 @@ func NewHttpHandlerV2(s ports.ProfileService, g fiber.Router) *Handler {
 func (h *Handler) Initialize() error {
 	h.g.Post("/profiles", h.createProfileHandler)
 	h.g.Get("/profiles/:oid", h.getProfileHandler)
+	h.g.Get("/profiles", h.listProfileHandler)
+	return nil
+}
+
+func (h *Handler) listProfileHandler(c *fiber.Ctx) error {
+	profiles := h.s.GetAllProfile()
+
+	res := make([]*ProfileResponse, 0, len(profiles))
+
+	for _, v := range profiles {
+
+		p := new(ProfileResponse)
+		p.ID = v.ID
+		p.Username = v.Username
+		p.Firstname = v.Firstname
+		p.Lastname = v.Lastname
+		p.Avatar = v.Avatar
+		p.DOB = v.DOB
+		p.Mobile = v.Mobile
+		p.Address = v.Address
+		p.OID = v.OID
+		res = append(res, p)
+	}
+
+	resStr, err := json.Marshal(res)
+	if err != nil {
+		return fiber.ErrInternalServerError
+	}
+
+	c.Status(fiber.StatusOK).SendString(string(resStr))
+	c.Set("content-type", "application/json")
+	c.Set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Cache-Control")
 	return nil
 }
 

@@ -49,3 +49,12 @@ func (repo *mapdb) GetProfileByOID(oid string) (*domain.UserProfile, error) {
 
 	return nil, ports.ErrProfileNotFound
 }
+
+func (repo *mapdb) GetAll() []*domain.UserProfile {
+	res := make([]*domain.UserProfile, 0, len(repo.DB))
+	for _, v := range repo.DB {
+		res = append(res, v)
+	}
+
+	return res
+}

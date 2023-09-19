@@ -31,3 +31,7 @@ func (s *service) GetProfile(id string) (*domain.UserProfile, error) {
 func (s *service) GetProfileByOID(oid string) (*domain.UserProfile, error) {
 	return s.repo.GetProfileByOID(oid)
 }
+
+func (s *service) GetAllProfile() []*domain.UserProfile {
+	return s.repo.GetAll()
+}
