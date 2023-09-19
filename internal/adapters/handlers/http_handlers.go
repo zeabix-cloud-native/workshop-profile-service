@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 
 	"github.com/zeabix-cloud-native/workshop-profile-service/internal/adapters/handlers/httpv1"
@@ -26,6 +27,8 @@ func (h *HTTPHandler) Serve(port string) error {
 		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
+
+	h.app.Use(compress.New())
 
 	g := h.app.Group("profile-service")
 
