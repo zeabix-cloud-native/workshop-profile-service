@@ -16,7 +16,7 @@ func main() {
 
 	repo := repository.NewMapDBRepository()
 	// Init DB
-	utils.InitDB()
+	utils.InitDB(repo)
 
 	s := services.NewProfileService(repo)
 
