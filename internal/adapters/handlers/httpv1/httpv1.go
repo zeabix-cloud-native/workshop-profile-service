@@ -58,12 +58,12 @@ func (h *Handler) getProfileHandler(c *fiber.Ctx) error {
 	res.Username = p.Username
 	res.Avatar = p.Avatar
 
-	resStr, err := json.Marshal(res)
-	if err != nil {
-		return fiber.ErrInternalServerError
-	}
+	// resStr, err := json.Marshal(res)
+	// if err != nil {
+	// 	return fiber.ErrInternalServerError
+	// }
 
-	c.Status(fiber.StatusCreated).SendString(string(resStr))
+	c.Status(fiber.StatusCreated).JSON(res)
 	return nil
 
 }
@@ -91,11 +91,11 @@ func (h *Handler) createProfileHandler(c *fiber.Ctx) error {
 	res.Username = p.Username
 	res.Avatar = p.Avatar
 
-	resStr, err := json.Marshal(res)
-	if err != nil {
-		return fiber.ErrInternalServerError
-	}
+	// resStr, err := json.Marshal(res)
+	// if err != nil {
+	// 	return fiber.ErrInternalServerError
+	// }
 
-	c.Status(fiber.StatusCreated).SendString(string(resStr))
+	c.Status(fiber.StatusCreated).JSON(res)
 	return nil
 }

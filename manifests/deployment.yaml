@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: workshop-profile-service
-        image: lqbl0acr0shared.azurecr.io/workshop-profile-service:cacb540
+        image: lqbl0acr0shared.azurecr.io/workshop-profile-service:bc1426e
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

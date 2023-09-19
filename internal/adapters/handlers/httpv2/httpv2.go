@@ -66,12 +66,12 @@ func (h *Handler) getProfileHandler(c *fiber.Ctx) error {
 	res.Address = p.Address
 	res.OID = p.OID
 
-	resStr, err := json.Marshal(res)
-	if err != nil {
-		return fiber.ErrInternalServerError
-	}
+	// resStr, err := json.Marshal(res)
+	// if err != nil {
+	// 	return fiber.ErrInternalServerError
+	// }
 
-	c.Status(fiber.StatusOK).SendString(string(resStr))
+	c.Status(fiber.StatusOK).JSON(res)
 	return nil
 }
 
@@ -108,11 +108,11 @@ func (h *Handler) createProfileHandler(c *fiber.Ctx) error {
 	res.Address = p.Address
 	res.OID = p.OID
 
-	resStr, err := json.Marshal(res)
-	if err != nil {
-		return fiber.ErrInternalServerError
-	}
+	// resStr, err := json.Marshal(res)
+	// if err != nil {
+	// 	return fiber.ErrInternalServerError
+	// }
 
-	c.Status(fiber.StatusCreated).SendString(string(resStr))
+	c.Status(fiber.StatusCreated).JSON(res)
 	return nil
 }
