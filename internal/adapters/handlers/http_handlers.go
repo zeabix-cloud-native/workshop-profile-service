@@ -22,7 +22,10 @@ func NewHTTPHandler(s ports.ProfileService) *HTTPHandler {
 }
 
 func (h *HTTPHandler) Serve(port string) error {
-	h.app.Use(cors.New())
+	h.app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	g := h.app.Group("profile-service")
 
